@@ -58,6 +58,16 @@ export const NumberOfCycles = [
         id: 3,
         name: 143,
         cycles:  35
+    },
+    {
+        id: 4,
+        name: 144,
+        cycles:  55
+    },
+    {
+        id: 5,
+        name: 145,
+        cycles:  80
     }
 ]
 

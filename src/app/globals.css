@@ -38,6 +38,34 @@ a {
 h1, h2, h3, h4 {
   color: navy;
 }
+table {
+  width: 60%;
+}
+
+td, th {
+  padding: 5px 18px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; /* Light border for row separation */
+}
+
+th {
+  background-color: #00008045; /* Lighter navy blue with low opacity */
+  color: #333; /* Darker text for better contrast */
+  font-size: 0.9em; /* Smaller text */
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: left;
+  border-bottom: 2px solid #004080; /* Darker navy blue bottom border */
+}
+
+table,
+table tr td:first-child,
+table tr th:first-child,
+table tr td:last-child,
+table tr th:last-child {
+  border-left: none;
+  border-right: none;
+}
 
 @media (prefers-color-scheme: dark) {
   /* html {

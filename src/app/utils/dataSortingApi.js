@@ -65,14 +65,14 @@ export const NoCChart = {
         label: "Machine Status",
         data: NumberOfCycles.map((data) => data.cycles),
         backgroundColor: [
-          "#3CC3DF",
-          "#FFAE4C",
-          "#FF928A",
+          "#3CC3DFc2",
+          "#FFAE4Cc2",
+          "#FF928Ac2",
         ],
       },
       {
         label: "Expected Value",
-        data: [10, 10, 10],
+        data: [10, 10, 10, 10, 10],
         type: "line",
         borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 2,
