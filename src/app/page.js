@@ -131,7 +131,7 @@ export default function Home() {
               <div>
                 <div style={{ display: "flex", flexDirection: "row", color: "#fff", marginTop: "5px" }}>
                   <div style={{ display: "flex", flexDirection: "column", width: "50%" }}>
-                    <span className={styles.mainHeading}>Fleet Peformance Report</span>
+                    <span className={styles.mainHeading}>Daily Peformance Report</span>
                     <span style={{ fontWeight: "lighter" }}>Generated at: 12/02/2025 08:00</span>
                   </div>
                   <div className={styles.filterBar}>
@@ -196,7 +196,7 @@ export default function Home() {
                       <h2 style={{ marginBottom: "10px" }}>Vehicle Peformance Comparison</h2>
                       <div className={styles.productivity} style={{ width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
 
-                        <BarChart chartData={numberofCycles} label={"Fuel Consumed/machine"} />
+                        <BarChart chartData={numberofCycles} label={"Tonnage/day"} />
                         <table className={styles.productivityTable}>
                           <tbody>
                             <tr >
@@ -419,23 +419,5 @@ export default function Home() {
   }
 }
 
-
-const style = {
-  summaryTilesContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    width: "100%",
-    margin: "20px 0 0 0"
-  },
-  summaryTile: {
-    backgroundColor: "#fff",
-    padding: "20px",
-    textAlign: "left",
-    borderRadius: "10px",
-    display: "flex",
-    flexDirection: "column",
-  },
-}
 
 

@@ -17,8 +17,23 @@ export const BarChart = ({ chartData, label }) => {
             legend: {
               display: false,
             },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Tonnage", 
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "Machine id", 
+                },
+                beginAtZero: true, 
+              },
           },
-        }}
+        }
+      }}
       />
     </div>
   );

@@ -7,7 +7,7 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: '#ffffff', // White background
+    backgroundColor: '#ffffff6e', // White background
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -16,7 +16,7 @@ const styles = {
   bubble: {
     position: 'absolute',
     borderRadius: '50%',
-    backgroundColor: 'rgba(0, 123, 255, 0.3)', // Light blue bubbles
+    backgroundColor: 'rgba(0, 123, 255, 0.9)', // Light blue bubbles
     animation: 'float 3s infinite ease-in-out',
   },
   content: {

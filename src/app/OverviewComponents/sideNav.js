@@ -37,17 +37,17 @@ export default function SideNav() {
 
       <Link
         className={screen == "reports" ?`${styles.sideNavLink} ${styles.active}`: styles.sideNavLink}
-        href="/#"
+        href="/Archive"
         onClick={() => setScreen("reports")}
       >
         <Image
-          src="/document.svg"
+          src="/noun-archive-131575.svg"
           alt="reports icon"
-          width={20}
-          height={20}
+          width={25}
+          height={25}
           priority
         />
-        <span>Reports</span>
+        <span >Archive</span>
       </Link>
 
       <div
