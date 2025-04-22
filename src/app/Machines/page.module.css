@@ -2,7 +2,6 @@
   --gray-rgb: 0, 0, 0;
   --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
   --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
@@ -10,9 +9,15 @@
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  min-height: 100svh;
   gap: 64px;
   font-family: var(--font-geist-sans);
+  background-color: #000000a9;
+  width: 100%;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,6 +36,7 @@
   flex-direction: column;
   width: 100%;
   z-index: 1;
+  position: relative;
 }
 
 .mainContainer {
@@ -40,6 +46,7 @@
   margin-left: 70px;
   align-items: center;
   position: relative;
+  min-height: 100vh;
 }
 
 .mainHeading {
@@ -49,7 +56,6 @@
 }
 
 .mainContent {
-  background-color: #000000a9;
   width: 90%;
   padding: 10px 0 0 40px;
   margin: 8svh 10svh;
@@ -61,10 +67,9 @@
 .tileContainer {
   width: 100%;
   display: grid;
-  gap: 15%;
-  grid-template: auto / 18% 18% 18%;
-  margin-top: 10px;
-  padding-bottom: 80px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
 }
 
 .tile {
@@ -72,24 +77,52 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  height: 35vh;
-  width: 100%;
-  border-radius: 10px;
-  background-color: #fff;
+  background-color: #ffffff;
+  border-radius: 12px;
+  min-height: 230px;
+  padding: 1.2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
 }
 
-.tile:hover{
-  box-shadow: 0 0 15px #3939f5;
+.tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(57, 57, 245, 0.2);
 }
 
 .tileIcon {
-  width: 75%;
-  height: 25%;
-  padding-bottom: 10px;
-  border-radius: 5px;
+  width: auto;
+  height: auto;
+  max-width: 100px;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
 }
 
+.tile:hover .tileIcon {
+  transform: scale(1.05);
+}
+
+.tile h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+.tile:last-child {
+  background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+  font-size: 3rem;
+  color: #666;
+  cursor: pointer;
+}
+
+.tile:last-child:hover {
+  background: linear-gradient(145deg, #e9ecef, #dee2e6);
+  color: #333;
+}
 
 @media (prefers-color-scheme: dark) {
   /*.logo {

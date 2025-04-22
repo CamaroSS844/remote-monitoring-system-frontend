@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import { useState, useEffect } from 'react';
 
 const styles = {
   splashScreen: {
@@ -59,28 +60,30 @@ const generateBubbles = () => {
   ));
 };
 
-const SplashScreen = () => {
-  return (
-    <div style={styles.splashScreen}>
-      <style>
-        {`
-          @keyframes float {
-            0% {
-              transform: translateY(0) scale(1);
+export default function SplashScreen({ children, isLoading }) {
+  if (isLoading) {
+    return (
+      <div style={styles.splashScreen}>
+        <style>
+          {`
+            @keyframes float {
+              0% {
+                transform: translateY(0) scale(1);
+              }
+              50% {
+                transform: translateY(-20px) scale(1.1);
+              }
+              100% {
+                transform: translateY(0) scale(1);
+              }
             }
-            50% {
-              transform: translateY(-20px) scale(1.1);
-            }
-            100% {
-              transform: translateY(0) scale(1);
-            }
-          }
-        `}
-      </style>
-      <div style={styles.content}>Loading...</div>
-      {generateBubbles()}
-    </div>
-  );
-};
+          `}
+        </style>
+        <div style={styles.content}>Loading...</div>
+        {generateBubbles()}
+      </div>
+    );
+  }
 
-export default SplashScreen;
+  return children;
+}

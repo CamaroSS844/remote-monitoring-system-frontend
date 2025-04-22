@@ -47,12 +47,27 @@ export default function MachineListPage() {
                       height={65}
                       priority
                     />
-                    <h2 >{machine.id_number}</h2>
-                    see more
+                    <h2>{machine.id_number}</h2>
+                    <p style={{ 
+                      color: '#666', 
+                      fontSize: '0.9rem',
+                      textAlign: 'center',
+                      marginTop: '0.5rem'
+                    }}>
+                      Click to view machine details and performance metrics
+                    </p>
                   </Link>
                 ))}
                 <div className={styles.tile}>
-                  <span style={{ fontSize: "7em" }}> + </span>
+                  <span>+</span>
+                  <p style={{ 
+                    fontSize: '1rem', 
+                    marginTop: '1rem',
+                    color: '#666',
+                    textAlign: 'center'
+                  }}>
+                    Add New Machine
+                  </p>
                 </div>
               </div>
             </div>

@@ -71,17 +71,34 @@ export default function Home() {
                         <div className={styles.mainContent}>
                             <h2 style={{ color: "#fff", margin: "10px" }}>{machine.fleet_number} {machine.machine_type}</h2>
                             <div className={styles.tile}>
-                                <div className={styles.tileNavigation}>
-                                    <div className={clicked.Profile ? styles.activeTileBtn : styles.tileButton} onClick={() => handleClick("Profile")}>Profile</div>
-                                    <div className={clicked.ShiftData ? styles.activeTileBtn : styles.tileButton} onClick={() => handleClick("ShiftData")}>Shift Data</div>
-                                    <div className={clicked.MachineStats ? styles.activeTileBtn : styles.tileButton} onClick={() => handleClick("MachineStats")}>Sensor Data</div>
-                                    <div className={clicked.Reports ? styles.activeTileBtn : styles.tileButton} onClick={() => handleClick("Reports")}>Reports</div>
-                                </div>
+                                <nav className={styles.tileNavigation}>
+                                    <button 
+                                        className={`${styles.navButton} ${clicked.Profile ? styles.activeNavButton : ''}`} 
+                                        onClick={() => handleClick("Profile")}
+                                    >
+                                        Profile
+                                    </button>
+                                    <button 
+                                        className={`${styles.navButton} ${clicked.ShiftData ? styles.activeNavButton : ''}`}
+                                        onClick={() => handleClick("ShiftData")}
+                                    >
+                                        Shift Data
+                                    </button>
+                                    <button 
+                                        className={`${styles.navButton} ${clicked.MachineStats ? styles.activeNavButton : ''}`}
+                                        onClick={() => handleClick("MachineStats")}
+                                    >
+                                        Statistics
+                                    </button>
+                                    <button 
+                                        className={`${styles.navButton} ${clicked.Reports ? styles.activeNavButton : ''}`}
+                                        onClick={() => handleClick("Reports")}
+                                    >
+                                        Reports
+                                    </button>
+                                </nav>
                                 {clicked.Profile && <Profile machineID={id} />}
                                 {clicked.ShiftData && <ShiftData />}
-                                {clicked.MachineStats && <MachineStats />}
-
-
                             </div>
                         </div>
                     </div>

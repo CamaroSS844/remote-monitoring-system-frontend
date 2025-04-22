@@ -158,9 +158,51 @@
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  padding-bottom: 80px;
-  background-color: #f2f2f2;
-  border-radius: 5px 5px 0 0;
+  padding-bottom: 40px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tileNavigation {
+  display: flex;
+  align-items: flex-end;
+  background: linear-gradient(to right, #003580, #000080);
+  padding: 1rem 2rem 0;
+  border-radius: 12px 12px 0 0;
+  width: 100%;
+  height: auto;
+  gap: 0.5rem;
+}
+
+.navButton {
+  position: relative;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  min-width: 120px;
+}
+
+.navButton:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.activeNavButton {
+  color: #003580;
+  background: white;
+  font-weight: 600;
+}
+
+.activeNavButton:hover {
+  color: #003580;
+  background: white;
 }
 
 /*****************************************************************/
@@ -217,18 +259,68 @@
   z-index: 2;
 }
 
-
 /*****************************************************************/
 
-
-
-.tileNavigation {
-  display: flex;
-  flex-direction: row;
-  border-radius: 5px 5px 0 0;
-  height: 6vh;
+.infoTable {
   width: 100%;
-  background-color: #615dba82;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1rem 0;
+}
+
+.infoTable tr {
+  transition: all 0.2s ease-in-out;
+}
+
+.infoTable tr:hover {
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.infoTable th,
+.infoTable td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.infoTable th {
+  color: #4b5563;
+  font-weight: 600;
+  width: 40%;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.infoTable td {
+  color: #111827;
+  font-weight: 500;
+}
+
+.infoTable tbody tr:last-child th,
+.infoTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.infoCard {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  height: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 53, 128, 0.1);
+}
+
+.infoCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.infoCard h3 {
+  color: #004080;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(0, 64, 128, 0.15);
 }
 
 .MachineTypeIcon {
@@ -492,4 +584,84 @@ a.secondary {
     filter: invert();
   }
   */
+}
+
+.profileContainer {
+  display: flex;
+  width: 100%;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.profileSection {
+  flex: 1;
+  min-width: 0;
+}
+
+.infoCard {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  height: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 53, 128, 0.1);
+}
+
+.infoCard h3 {
+  color: #004080;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(0, 64, 128, 0.15);
+}
+
+.infoTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.infoTable tr {
+  transition: background-color 0.2s ease;
+}
+
+.infoTable tr:hover {
+  background-color: rgba(0, 64, 128, 0.03);
+}
+
+.infoTable th,
+.infoTable td {
+  padding: 0.875rem;
+  border-bottom: 1px solid rgba(0, 64, 128, 0.08);
+}
+
+.infoTable th {
+  color: #505c6e;
+  font-weight: 600;
+  width: 45%;
+  font-size: 0.9rem;
+}
+
+.infoTable td {
+  color: #1a2433;
+  font-size: 0.9rem;
+}
+
+.infoTable tbody tr:last-child th,
+.infoTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .profileContainer {
+    flex-direction: column;
+  }
+  
+  .profileSection {
+    width: 100%;
+  }
+  
+  .infoCard {
+    margin-bottom: 1rem;
+  }
 }

@@ -157,4 +157,36 @@ export const retrieveSensorData = async ( dispatch, update, date, machineID) => 
     }
 };
 
- 
+export const retrieveReport = async (fileType) => {
+    const url = `${url}/api/download-${fileType}`; // Adjust the endpoint
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer YOUR_ACCESS_TOKEN`, // If needed
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to download ${fileType}`);
+        }
+
+        const blob = await response.blob();
+        const fileExtension = fileType === 'pdf' ? 'pdf' : 'xlsx';
+        const urlBlob = window.URL.createObjectURL(blob);
+
+        // Create an anchor tag and trigger download
+        const a = document.createElement('a');
+        a.href = urlBlob;
+        a.download = `report.${fileExtension}`;
+        document.body.appendChild(a);
+        a.click();
+
+        // Clean up
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(urlBlob);
+    } catch (error) {
+        console.error(`Error downloading ${fileType}:`, error);
+    }
+};
+
