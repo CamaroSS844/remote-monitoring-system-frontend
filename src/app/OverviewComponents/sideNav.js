@@ -61,7 +61,7 @@ export default function SideNav() {
 
       <Link
         className={screen == "settings" ?`${styles.sideNavLink} ${styles.active}`: styles.sideNavLink}
-        href="/#"
+        href="/settings"
         onClick={() => setScreen("settings")}
       >
         <Image
@@ -76,7 +76,7 @@ export default function SideNav() {
 
       <Link
         className={screen == "help" ?`${styles.sideNavLink} ${styles.active}`: styles.sideNavLink}
-        href="/#"
+        href="/help"
         onClick={() => setScreen("help")}
       >
         <Image

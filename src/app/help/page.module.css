@@ -1,0 +1,112 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  min-height: 100svh;
+  gap: 64px;
+  font-family: var(--font-geist-sans);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-left: 160px; /* Match sideNav width */
+  align-items: center;
+  position: relative;
+  min-height: 100vh;
+}
+
+.mainContent {
+  width: 90%;
+  padding: 20px;
+  margin: 8.8svh 2rem 2rem 2rem; /* Top margin matches header height */
+  position: relative;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.helpSection {
+  display: grid;
+  gap: 2rem;
+}
+
+.helpSection h2 {
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.helpCard {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.helpCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.helpCard h3 {
+  color: #3CC3DF;
+  margin-bottom: 1rem;
+}
+
+.helpCard p {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.helpCard ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.helpCard li {
+  color: #555;
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.helpCard li:before {
+  content: "•";
+  color: #3CC3DF;
+  position: absolute;
+  left: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .mainContainer {
+    margin-left: 0;
+    margin-bottom: 60px; /* Space for mobile nav */
+  }
+  
+  .mainContent {
+    width: 95%;
+    margin-top: calc(8.8svh + 1rem);
+    padding: 15px;
+  }
+  
+  .helpCard {
+    padding: 1rem;
+  }
+}

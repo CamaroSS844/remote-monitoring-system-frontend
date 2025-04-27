@@ -61,6 +61,67 @@ export default function ShiftData() {
         ],
       });
 
+    const [tonnageData, setTonnageData] = useState({
+        labels: [],
+        datasets: [
+            {
+                label: "Tonnage per Shift",
+                data: [],
+                borderColor: "#007bff",
+                backgroundColor: "rgba(0, 123, 255, 0.5)",
+                tension: 0.3,
+            },
+            {
+                label: "Target Tonnage",
+                data: [],
+                borderColor: "#ff0000",
+                backgroundColor: "rgba(255, 0, 0, 0.5)",
+                borderDash: [5, 5],
+                tension: 0.3,
+            },
+        ],
+    });
+
+    const [cumulativeTonnageData, setCumulativeTonnageData] = useState({
+        labels: [],
+        datasets: [
+            {
+                label: "Cumulative Tonnage",
+                data: [],
+                borderColor: "#28a745",
+                backgroundColor: "rgba(40, 167, 69, 0.5)",
+                tension: 0.3,
+            }
+        ],
+    });
+
+    const [dailyTonnageData, setDailyTonnageData] = useState({
+        labels: [],
+        datasets: [
+            {
+                label: "Daily Total Tonnage",
+                data: [],
+                borderColor: "#28a745",
+                backgroundColor: "rgba(40, 167, 69, 0.5)",
+                tension: 0.3,
+            }
+        ],
+    });
+
+    const chartOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: "top",
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    };
+
     const data = useAppSelector(dataSelector);
     const kpis = useAppSelector(KPIselector)[0];
     const sensorData = useAppSelector(sensorDataSelector);
@@ -108,6 +169,71 @@ export default function ShiftData() {
             alert("No data for this date");
         }
     }
+
+    useEffect(() => {
+        if (state.currentData && state.currentData.length > 0) {
+            // Update tonnage per shift chart
+            const labels = state.currentData.map(e => `${formatDate(e.date)} S${e.shift_number}`);
+            const tonnages = state.currentData.map(e => e.tonnage);
+            const targetTonnage = new Array(labels.length).fill(kpis.tonnage_per_shift);
+
+            setTonnageData({
+                labels,
+                datasets: [
+                    {
+                        ...tonnageData.datasets[0],
+                        data: tonnages
+                    },
+                    {
+                        ...tonnageData.datasets[1],
+                        data: targetTonnage
+                    }
+                ]
+            });
+
+            // Calculate and update cumulative tonnage
+            const cumulativeTonnages = tonnages.reduce((acc, curr, i) => {
+                const prev = i > 0 ? acc[i - 1] : 0;
+                acc.push(prev + Number(curr));
+                return acc;
+            }, []);
+
+            setCumulativeTonnageData({
+                labels,
+                datasets: [
+                    {
+                        ...cumulativeTonnageData.datasets[0],
+                        data: cumulativeTonnages
+                    }
+                ]
+            });
+
+            // Calculate daily totals by combining shifts
+            const dailyTotals = state.currentData.reduce((acc, curr) => {
+                const date = curr.date;
+                if (!acc[date]) {
+                    acc[date] = { total: 0, count: 0 };
+                }
+                acc[date].total += Number(curr.tonnage);
+                acc[date].count++;
+                return acc;
+            }, {});
+
+            // Convert to array format for chart
+            const dailyLabels = Object.keys(dailyTotals).map(date => formatDate(date));
+            const dailyValues = Object.values(dailyTotals).map(data => data.total);
+
+            setDailyTonnageData({
+                labels: dailyLabels,
+                datasets: [
+                    {
+                        ...dailyTonnageData.datasets[0],
+                        data: dailyValues
+                    }
+                ]
+            });
+        }
+    }, [state.currentData, kpis.tonnage_per_shift]);
 
     return (
         <div style={{ margin: "10px", display: "flex", flexDirection: "column", width: "100%" }}>
@@ -157,8 +283,8 @@ export default function ShiftData() {
                     <h3>Productivity</h3>
                     <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly", width: "100%" }}>
                         <div style={{ width: "45%", display: "flex", flexDirection: "column" }}>
-                            <LineChart data={lineData} options={lineOptions}/>
-                            <LineChart data={lineData} options={lineOptions}/>
+                            <LineChart data={tonnageData} options={chartOptions}/>
+                            <LineChart data={dailyTonnageData} options={chartOptions}/>
                         </div>
                         <div className={styles.productivity} style={{ width: "60%" }}>
                             <table className={styles.productivityTable}>
@@ -219,7 +345,7 @@ export default function ShiftData() {
                 </div>
 
                 <div className={styles.weightContainer}>
-                    <h3>Sensor Data</h3>
+                    <h3>Ave Sensor Data</h3>
                     <div className={styles.productivity} style={{ width: "100%", display: "flex" }}>
                         <div className={styles.tableContainer}>
                             <table className={styles.scrollableTable}>

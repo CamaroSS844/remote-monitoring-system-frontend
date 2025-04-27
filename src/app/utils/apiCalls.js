@@ -1,6 +1,7 @@
 const url =  "http://127.0.0.1:8000/";
 
 export const retrieveData = async ( dispatch, initialize) => {
+    //retrieve list of machines from the server and dispatch it to the redux store
     try {
         const response = await fetch(
             `${url}/machines/machinesListCreate/?mine=Mimosa%20mine`,
@@ -21,11 +22,15 @@ export const retrieveData = async ( dispatch, initialize) => {
             throw new Error("Failed to retrieve data");
         }
 
-        const data = await response.json();
-        console.log("Retrieved data:", data);
+        const data = await response.json().then((data) => {
+            console.log("Data retrieved:", data); // Log the data for debugging
+            dispatch(initialize(data)); // Dispatch the data to the Redux store
+            return data; // Return the data for further use if needed
+        });
+        // console.log("Retrieved data:", data);
 
-        // Dispatch the data to the Redux store
-        dispatch(initialize(data));
+        // // Dispatch the data to the Redux store
+        // dispatch(initialize(data));
     } catch (error) {
         console.error("Error retrieving data:", error.message);
     }

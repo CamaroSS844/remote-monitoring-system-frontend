@@ -9,10 +9,12 @@ export const machineStorageSlice = createSlice({
   initialState,
   reducers: {
     initialize: (state, action) => {
+      console.log("Initializing machine data:", action.payload); // Log the payload for debugging
       state.data = [...action.payload]; // Update the state with the payload
+      console.log("Updated machine data:", state.data); // Log the updated state for debugging
     }, 
     addNew: (state, action) => {
-      // Implement adding a new grave
+      // Implement adding a machine to the state
       state.data = [...state.data, action.payload];
     }
   },

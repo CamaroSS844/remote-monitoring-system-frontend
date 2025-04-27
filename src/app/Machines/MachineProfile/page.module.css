@@ -167,7 +167,7 @@
 .tileNavigation {
   display: flex;
   align-items: flex-end;
-  background: linear-gradient(to right, #003580, #000080);
+  background: linear-gradient(to right, #003580, #000080a6);
   padding: 1rem 2rem 0;
   border-radius: 12px 12px 0 0;
   width: 100%;

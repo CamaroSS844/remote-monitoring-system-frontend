@@ -34,7 +34,9 @@ export default function Home() {
     rawReportData: [],
     totalFuelConsumed: 0,
     totalTonnage: 0,
-    totalViolations: 0
+    totalViolations: 0,
+    generatedAt: null,
+    activeMachines: 0
   })
 
   const machines = useAppSelector(machineSelector);
@@ -81,29 +83,29 @@ export default function Home() {
       console.log("KPIs fetched and received successfully")
     })
     retrieveReportData().then(e => {
-      if (reportData == null) {
-        totalTonnage = 0;
-        totalFuelConsumed = 0;
-        e.map(i => {
-          totalTonnage += i.tonnage;
-          totalFuelConsumed += i.fuel_consumed;
-        })
+      const currentTimestamp = new Date();
+      let totalTonnage = 0;
+      let totalFuelConsumed = 0;
+      let activeMachines = 0;
 
-        setReportData({
-          rawReportData: e,
-          totalTonnage: totalTonnage,
-          totalFuelConsumed: totalFuelConsumed,
-          totalViolations: 0
-        })
+      e.forEach(machine => {
+        totalTonnage += machine.tonnage;
+        totalFuelConsumed += machine.fuel_consumed;
+        if (machine.tonnage > 0 || machine.fuel_consumed > 0 || machine.distance_travelled > 0) {
+          activeMachines++;
+        }
+      });
 
-      } else {
-        setReportData({ ...reportData, rawReportData: e })
-      }
+      setReportData({
+        rawReportData: e,
+        totalTonnage: totalTonnage,
+        totalFuelConsumed: totalFuelConsumed,
+        totalViolations: 0,
+        activeMachines: activeMachines,
+        generatedAt: currentTimestamp
+      });
     })
   }, [dispatch]);
-
-
-  const [numberofCycles, setnumberofCycles] = useState({ ...NoCChart });
 
   return (
     <Suspense fallback={<LoadingSpinner />}>
@@ -115,8 +117,10 @@ export default function Home() {
                 <div>
                   <div style={{ display: "flex", flexDirection: "row", color: "#fff", marginTop: "5px" }}>
                     <div style={{ display: "flex", flexDirection: "column", width: "50%" }}>
-                      <span className={styles.mainHeading}>Daily Peformance Report</span>
-                      <span style={{ fontWeight: "lighter" }}>Generated at: 12/02/2025 08:00</span>
+                      <span className={styles.mainHeading}>Daily Performance Report</span>
+                      <span style={{ fontWeight: "lighter" }}>
+                        Generated at: {reportData.generatedAt ? reportData.generatedAt.toLocaleString() : 'Loading...'}
+                      </span>
                     </div>
                     <div className={styles.filterBar}>
                       <div className={styles.filter}>
@@ -227,49 +231,25 @@ export default function Home() {
                         <h2 style={{ marginBottom: "10px" }}>KPI Comparison</h2>
                         <table className={styles.productivityTable}>
                           <tbody>
-                            <tr >
+                            <tr>
                               <th>M. ID</th>
                               <th>Utilization</th>
                               <th>Availability</th>
                             </tr>
-                            <tr className={styles.productTableRow} >
-                              <td>LHD 141</td>
-                              <td>0</td>
-                              <td>0</td>
-                            </tr>
-                            <tr className={styles.productTableRow} >
-                              <td>LHD 142</td>
-                              <td>0</td>
-                              <td>0</td>
-                            </tr>
-                            <tr className={styles.productTableRow} >
-                              <td>LHD 143</td>
-                              <td>0</td>
-                              <td>0</td>
-                            </tr>
-                            {/*
-                                        (state.currentData ?? []).map(e => {
-                                            return (
-                                                <tr key={e.id} className={(state.currentShift.id == e.id)? styles.activeProductTableRow :styles.productTableRow} onClick={() => handleRowClick(e)}>
-                                                    <td>{formatDate(e.date)}</td>
-                                                    <td>{e.shift_number}</td>
-                                                    <td style={(kpis.tonnage_per_shift > e.tonnage) ? {color: "red"} : {color: "green"}}>{e.tonnage}</td>
-                                                    <td style={(kpis.tonnage_per_shift > e.tonnage) ? {color: "red"} : {color: "green"}}>{(parseInt(e.tonnage) / 8).toFixed(2)}</td>
-                                                    <td>{e.no_of_loads}</td>
-                                                    <td style={{color: "green", fontStyle: "italic"}}>clear</td>
-                                                </tr>
-                                            )
-                                        }) 
-                          */}
+                            {reportData.rawReportData.map((machine, index) => {
+                              const totalPossibleTonnage = 500; // Example benchmark
+                              const utilization = ((machine.tonnage / totalPossibleTonnage) * 100).toFixed(1);
+                              const availability = machine.tonnage > 0 ? "100.0" : "0.0";
+                              return (
+                                <tr key={`${machine.machine_name}-${index}`} className={styles.productTableRow}>
+                                  <td>{machine.machine_name}</td>
+                                  <td>{utilization}%</td>
+                                  <td>{availability}%</td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
-
-                        <ul style={{ width: "100%", margin: "10px 0 0 40px" }}>
-                          <b>Additional Notes:</b>
-                          <li>LHD 141 has the best efficiency</li>
-                          <li>LHD 142 has improved the fuel efficiency</li>
-                          <li>LHD 143 has improved the most violations and that should be reviewed</li>
-                        </ul>
                       </div>
                     </div>
 
@@ -353,9 +333,13 @@ export default function Home() {
 
                         <ul style={{ width: "100%", margin: "10px 0 0 40px" }}>
                           <b>Additional Notes:</b>
-                          <li>LHD 141 has the best efficiency</li>
-                          <li>LHD 142 has improved the fuel efficiency</li>
-                          <li>LHD 143 has improved the most violations and that should be reviewed</li>
+                          {reportData.rawReportData.length > 0 && (
+                            <>
+                              <li>{reportData.rawReportData[0].machine_name} is carrying the highest load with {reportData.rawReportData[0].tonnage} tons</li>
+                              <li>Overall fleet utilization is at {((reportData.activeMachines / reportData.rawReportData.length) * 100).toFixed(1)}%</li>
+                              <li>Average fuel consumption per active machine: {(reportData.totalFuelConsumed / (reportData.activeMachines || 1)).toFixed(1)}L</li>
+                            </>
+                          )}
                         </ul>
                       </div>
                     </div>
