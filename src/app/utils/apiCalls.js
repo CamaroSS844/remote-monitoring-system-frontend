@@ -4,7 +4,7 @@ export const retrieveData = async ( dispatch, initialize) => {
     //retrieve list of machines from the server and dispatch it to the redux store
     try {
         const response = await fetch(
-            `${url}/machines/machinesListCreate/?mine=Mimosa%20mine`,
+            `${url}/machines/machinesListCreate/?mine=Mimosa%20Mine`,
             {
                 method: "GET",
                 headers: {
