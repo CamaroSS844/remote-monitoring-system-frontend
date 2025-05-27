@@ -1,4 +1,5 @@
-const url =  "http://127.0.0.1:8000/";
+//const url =  "http://127.0.0.1:8000/";
+const url =  "https://tmm-backend.onrender.com";
 
 export const retrieveData = async ( dispatch, initialize) => {
     //retrieve list of machines from the server and dispatch it to the redux store
