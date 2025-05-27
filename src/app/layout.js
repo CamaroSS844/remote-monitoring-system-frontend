@@ -80,12 +80,29 @@ const ShiftDuration = ({ isEditable, companyInfo, setCompanyInfo }) => {
 
 
 export default function RootLayout({ children }) {
-
   const [windowDimensions, setWindowDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 0,
+    height: 0
   });
   const [popUpVisibility, setpopUpVisibility] = useState(false);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+    
+    // Set initial dimensions
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const [isEditable, setIsEditable] = useState(false);
   const [companyInfo, setCompanyInfo] = useState({
