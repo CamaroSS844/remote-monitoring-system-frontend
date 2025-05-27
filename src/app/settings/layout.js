@@ -24,8 +24,8 @@ const geistMono = localFont({
 
 export default function RootLayout({ children }) {
   const [windowDimensions, setWindowDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 0,
+    height: 0
   });
   const [popUpVisibility, setpopUpVisibility] = useState(false);
 

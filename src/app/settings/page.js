@@ -31,20 +31,33 @@ export default function Settings() {
 
   // Load settings from localStorage on component mount
   useEffect(() => {
-    const savedSettings = localStorage.getItem('mineSettings');
-    if (savedSettings) {
-      setSettings(JSON.parse(savedSettings));
+    // Only access localStorage and document on the client side
+    if (typeof window !== 'undefined') {
+      try {
+        const savedSettings = localStorage.getItem('mineSettings');
+        if (savedSettings) {
+          setSettings(JSON.parse(savedSettings));
+        }
+        // Load theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch (error) {
+        console.error('Error loading settings:', error);
+      }
     }
-    // Load theme preference
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    setTheme(savedTheme);
-    document.documentElement.setAttribute('data-theme', savedTheme);
   }, []);
 
   const saveSettings = () => {
-    localStorage.setItem('mineSettings', JSON.stringify(settings));
-    localStorage.setItem('theme', settings.display.theme);
-    document.documentElement.setAttribute('data-theme', settings.display.theme);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('mineSettings', JSON.stringify(settings));
+        localStorage.setItem('theme', settings.display.theme);
+        document.documentElement.setAttribute('data-theme', settings.display.theme);
+      } catch (error) {
+        console.error('Error saving settings:', error);
+      }
+    }
   };
 
   const handleThemeChange = (newTheme) => {
